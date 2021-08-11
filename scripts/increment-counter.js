@@ -15,37 +15,39 @@ var AWS = require("aws-sdk");
 
 AWS.config.update({
   region: "us-east-1",
-  endpoint: "http://localhost:4566/",
+  endpoint: "http://localhost:4566",
 });
 
-var dynamodb = new AWS.DynamoDB();
+var docClient = new AWS.DynamoDB.DocumentClient();
+
+var table = "Movies";
+
+var year = 2015;
+var title = "The Big New Movie";
+
+// Increment an atomic counter
 
 var params = {
-  TableName: "Movies",
-  KeySchema: [
-    { AttributeName: "year", KeyType: "HASH" }, //Partition key
-    { AttributeName: "title", KeyType: "RANGE" }, //Sort key
-  ],
-  AttributeDefinitions: [
-    { AttributeName: "year", AttributeType: "N" },
-    { AttributeName: "title", AttributeType: "S" },
-  ],
-  ProvisionedThroughput: {
-    ReadCapacityUnits: 10,
-    WriteCapacityUnits: 10,
+  TableName: table,
+  Key: {
+    year: year,
+    title: title,
   },
+  UpdateExpression: "set info.rating = info.rating + :val",
+  ExpressionAttributeValues: {
+    ":val": 1,
+  },
+  ReturnValues: "UPDATED_NEW",
 };
 
-dynamodb.createTable(params, function (err, data) {
+console.log("Updating the item...");
+docClient.update(params, function (err, data) {
   if (err) {
     console.error(
-      "Unable to create table. Error JSON:",
+      "Unable to update item. Error JSON:",
       JSON.stringify(err, null, 2)
     );
   } else {
-
-      "Created table. Table description JSON:",
-      JSON.stringify(data, null, 2)
-    );
+    console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
   }
 });

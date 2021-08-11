@@ -4,8 +4,17 @@
   "description": "",
   "main": " MoviesCreateTable.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "create-table": "node create-table.js"
+    "create-table": "node scripts/create-table.js",
+    "load-data": "node scripts/load-data.js",
+    "create-record": "node scripts/create-record.js",
+    "get-record": "node scripts/get-record.js",
+    "update-record": "node scripts/update-record.js",
+    "increment-counter": "node scripts/increment-counter.js",
+    "update-record-conditional": "node scripts/update-record-conditional.js",
+    "delete-record": "node scripts/delete-record.js",
+    "query-records": "node scripts/query-records.js",
+    "scan-records": "node scripts/scan-records.js",
+    "delete-table": "node scripts/delete-table.js"
   },
   "author": "",
   "license": "ISC",
