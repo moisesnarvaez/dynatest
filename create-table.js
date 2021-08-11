@@ -12,16 +12,14 @@
  * specific language governing permissions and limitations under the License.
  */
 var AWS = require("aws-sdk");
-// import AWS from "aws-sdk";
 
-console.log("1");
 AWS.config.update({
   region: "us-east-1",
   endpoint: "http://localhost:4566/",
 });
-console.log("2");
+
 var dynamodb = new AWS.DynamoDB();
-console.log("3");
+
 var params = {
   TableName: "Movies",
   KeySchema: [
@@ -37,7 +35,7 @@ var params = {
     WriteCapacityUnits: 10,
   },
 };
-console.log("4");
+
 dynamodb.createTable(params, function (err, data) {
   if (err) {
     console.error(
@@ -45,7 +43,7 @@ dynamodb.createTable(params, function (err, data) {
       JSON.stringify(err, null, 2)
     );
   } else {
-    console.log(
+
       "Created table. Table description JSON:",
       JSON.stringify(data, null, 2)
     );
